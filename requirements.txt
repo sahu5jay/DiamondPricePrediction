@@ -1,3 +1,4 @@
 pandas 
+scikit-learn
 
--e .
+# -e .
