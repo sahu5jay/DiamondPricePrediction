@@ -14,12 +14,20 @@ class PredictPipeline:
             preprocessor_path=os.path.join('artifacts','preprocessor.pkl')
             model_path=os.path.join('artifacts','model.pkl')
 
-            preprocessor=load_object(preprocessor_path)
-            model=load_object(model_path)
+            logging.info("collected the path of the pickel file")
 
+            preprocessor=load_object(preprocessor_path)
+            logging.info("preprocessor pickle file loaded")
+            model=load_object(model_path)
+            logging.info("model pickle file loaded")
+
+            logging.info("Custom data scaling started")
             data_scaled=preprocessor.transform(features)
+            
+            logging.info("Custom data scaled")
 
             pred=model.predict(data_scaled)
+            logging.info("returing the predicted price application")
             return pred
             
 
@@ -51,6 +59,7 @@ class CustomData:
 
     def get_data_as_dataframe(self):
         try:
+            logging.info("convertig the custom data to dictionary...")
             custom_data_input_dict = {
                 'carat':[self.carat],
                 'depth':[self.depth],
@@ -62,8 +71,9 @@ class CustomData:
                 'color':[self.color],
                 'clarity':[self.clarity]
             }
+            logging.info("convertig the custom data to pandas data frame")
             df = pd.DataFrame(custom_data_input_dict)
-            logging.info('Dataframe Gathered')
+            logging.info("returning the data frame to application")
             return df
         except Exception as e:
             logging.info('Exception Occured in prediction pipeline')
